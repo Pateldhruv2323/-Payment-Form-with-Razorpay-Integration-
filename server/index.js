@@ -106,7 +106,9 @@ app.post("/verify-payment", async (req, res) => {
         { razorpay_order_id },
         { razorpay_payment_id, razorpay_signature, status: "Success" }
       );
+      console.log(`✅ Payment Verified for Order: ${razorpay_order_id}`);
       res.json({ status: "Payment Verified" });
+      
     } else {
       res.status(400).json({ status: "Invalid Signature" });
     }
@@ -118,3 +120,6 @@ app.post("/verify-payment", async (req, res) => {
 
 // ✅ Start Server
 app.listen(5000, () => console.log("🚀 Server running on http://localhost:5000"));
+app.get('/', (req, res) => {
+    res.send('✅ API is Live');
+  });

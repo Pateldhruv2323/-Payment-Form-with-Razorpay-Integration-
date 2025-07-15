@@ -40,7 +40,7 @@ const Form = () => {
     const baseAmount = +customAmount || amount;
 
     try {
-      const res = await axios.post('http://localhost:5000/create-order', {
+      const res = await axios.post('https://payment-form-with-razorpay-integration-1b09.onrender.com/create-order', {
         ...formData,
         amount: baseAmount,
         tip,
@@ -54,9 +54,24 @@ const Form = () => {
         currency,
         name,
         order_id: orderId,
-        handler: function () {
-          alert('Payment Successful');
-        },
+        handler: async function (response: any) {
+            try {
+              await axios.post('https://payment-form-with-razorpay-integration-1b09.onrender.com/verify-payment', {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              });
+          
+              alert('✅ Payment Verified Successfully!');
+              console.log('✅ Verified Payment Details:', response);
+          
+            } catch (err) {
+              console.error('❌ Payment Verification Failed:', err);
+              alert('❌ Payment Verification Failed');
+            }
+          },
+          
+          
         prefill: {
           name: formData.anonymous ? 'Anonymous' : formData.name,
           email: formData.anonymous ? '' : formData.email,
@@ -70,10 +85,9 @@ const Form = () => {
         },
       };
 
-    //   const rzp = new (window as any).Razorpay(options);
-    //   rzp.open();
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
 
-    alert('✅ Payment Successful');
 console.log('Order Details:', {
   name: formData.name,
   amount: totalAmount,
