@@ -64,6 +64,18 @@ const Form = () => {
           
               alert('✅ Payment Verified Successfully!');
               console.log('✅ Verified Payment Details:', response);
+
+              setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                address: '',
+                anonymous: false,
+              });
+              setAmount(2500);
+              setTip(18);
+              setCustomAmount('');
+              setSubmitted(false);
           
             } catch (err) {
               console.error('❌ Payment Verification Failed:', err);
