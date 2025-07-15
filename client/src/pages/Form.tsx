@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AmountSelector from '../components/AmountSelector';
-import TipSelector from '../components/TipSelector';
+// import TipSelector from '../components/TipSelector';
 import FormFields from '../components/FormFields';
 import axios from 'axios';
 import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io';
@@ -28,7 +28,7 @@ const Form = () => {
   };
 
   const handleSubmit = async () => {
-    setSubmitted(true); // show validation
+    setSubmitted(true); 
 
     const isInvalid =
       formData.name.trim() === '' ||
