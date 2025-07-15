@@ -21,21 +21,22 @@ router.post('/', express.raw({ type: 'application/json' }), (req, res) => {
     console.log('✅ Webhook verified');
 
     try {
-      const event = JSON.parse(rawBody.toString()); // ✅ parse correctly
+      const event = JSON.parse(rawBody.toString());
 
       if (event.event === 'payment.captured') {
         const paymentData = event.payload.payment.entity;
         console.log('💰 Payment captured:', paymentData.id, paymentData.amount);
+        // Optional: You can update DB here if needed
       }
 
       res.status(200).json({ status: 'ok' });
     } catch (err) {
-      console.error('❌ Failed to parse JSON:', err);
+      console.error('❌ JSON Parse Error:', err);
       res.status(400).send('Invalid JSON');
     }
   } else {
-    console.warn('❌ Invalid signature');
-    res.status(400).json({ status: 'invalid signature' });
+    console.warn('❌ Invalid Webhook Signature');
+    res.status(400).json({ status: 'Invalid Signature' });
   }
 });
 
