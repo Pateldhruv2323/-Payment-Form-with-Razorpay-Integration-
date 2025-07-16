@@ -33,7 +33,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
-app.use(cors());
+app.use(cors({ origin: "https://razorpaypaymentform.netlify.app"}));
 
 // ✅ Handle JSON for all routes except webhook
 app.use((req, res, next) => {
