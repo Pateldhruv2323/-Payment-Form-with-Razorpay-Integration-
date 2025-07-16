@@ -7,7 +7,7 @@ interface Props {
 }
 
 const TipSelector: React.FC<Props> = ({ tip, setTip, baseAmount }) => {
-  const tips = [0, 5, 10, 18];
+  const tips = [2, 5, 10, 18];
   const calculateTip = (percentage: number) =>
     Math.round((baseAmount * percentage) / 100);
 

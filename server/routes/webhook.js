@@ -21,7 +21,7 @@ router.post('/', express.raw({ type: 'application/json' }), (req, res) => {
     console.log('✅ Webhook verified');
 
     try {
-      const event = JSON.parse(rawBody.toString());
+      const event = JSON.parse(rawBody.toString('utf8'));
 
       if (event.event === 'payment.captured') {
         const paymentData = event.payload.payment.entity;

@@ -46,13 +46,13 @@ const Form = () => {
         tip,
       });
 
-      const { orderId, amount, currency, key, name } = res.data;
+      const { orderId, amount, currency, key,  } = res.data;
 
       const options = {
         key,
         amount,
         currency,
-        name,
+        name: formData.anonymous ? "Anonymous Donor" : formData.name,
         order_id: orderId,
         handler: async function (response: any) {
             try {
@@ -84,14 +84,16 @@ const Form = () => {
           },
           
           
-        prefill: {
-          name: formData.anonymous ? 'Anonymous' : formData.name,
-          email: formData.anonymous ? '' : formData.email,
-          contact: formData.phone,
-        },
-        notes: {
-          address: formData.address,
-        },
+          prefill: {
+            ...(formData.anonymous ? {} : { 
+              name: formData.name,
+              email: formData.email 
+            }),
+            contact: formData.phone,
+          },
+          notes: {
+            ...(formData.anonymous ? {} : { address: formData.address }),
+          },
         theme: {
           color: '#00b5ad',
         },
@@ -161,7 +163,7 @@ console.log('Order Details:', {
                 onChange={(e) => setTip(Number(e.target.value))}
                 className="w-full appearance-none px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none bg-white font-bold text-black"
               >
-                {[0, 5, 10, 18].map((t) => (
+                {[2, 5, 10, 18].map((t) => (
                   <option key={t} value={t}>
                     {t}% (INR {Math.round(((+customAmount || amount) * t) / 100)})
                   </option>

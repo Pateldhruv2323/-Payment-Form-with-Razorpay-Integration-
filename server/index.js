@@ -68,7 +68,7 @@ app.post("/create-order", async (req, res) => {
 
     const payment = new Payment({
       name: anonymous ? "Anonymous Donor" : name,
-      email,
+      email: anonymous ? "" : email,
       phone,
       amount,
       tip,
