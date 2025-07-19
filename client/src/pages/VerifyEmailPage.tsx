@@ -33,7 +33,7 @@ const VerifyEmailPage = ({ onVerified, onBack }: { onVerified: () => void; onBac
     <div className="min-h-screen flex flex-col justify-center items-center bg-[#f8fafa] px-4">
       <div className="bg-white p-6 rounded-md shadow-md w-full max-w-md space-y-4">
         <h2 className="text-xl font-bold text-center text-gray-700">Email Verification</h2>
-
+    <div className='flex items-center relative'>
         <input
           type="email"
           placeholder="Enter Your Email"
@@ -44,6 +44,7 @@ const VerifyEmailPage = ({ onVerified, onBack }: { onVerified: () => void; onBac
           <FaEnvelope
             className={`absolute right-2 top-5 transform -translate-y-1/2`}
           />
+      </div>
 
 <div className='flex items-center relative'>
 
