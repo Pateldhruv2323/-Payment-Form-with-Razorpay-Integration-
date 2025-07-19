@@ -1,18 +1,21 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Razorpay = require("razorpay");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
-require("dotenv").config();
+const openaiRoutes = require('./routes/openai');
+const authRoutes = require('./routes/auth.routes');
+
 
 const app = express();
 
-// Database Connection
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ DB Error:", err));
 
-// Payment Model
+
 const Payment = mongoose.model('Payment', new mongoose.Schema({
   name: String,
   email: String,
@@ -27,28 +30,34 @@ const Payment = mongoose.model('Payment', new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 }));
 
-// Razorpay Instance
+
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
-app.use(cors({ origin: "https://razorpaypaymentform.netlify.app"}));
+app.use(cors({
+  origin: ["http://localhost:3000", "https://razorpaypaymentform.netlify.app"],
+  credentials: true,
+}));
 
-// ✅ Handle JSON for all routes except webhook
-app.use((req, res, next) => {
-  if (req.originalUrl === "/api/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.originalUrl === "/api/webhook") {
+//     next();
+//   } else {
+//     express.json()(req, res, next);
+//   }
+// });
+app.use(express.json());
 
-// ✅ Webhook Route
+app.use('/api/openai', openaiRoutes);
+app.use('/api/auth', authRoutes);
+
+
 const webhookRoutes = require('./routes/webhook');
 app.use('/api/webhook', webhookRoutes);
 
-// ✅ Create Razorpay Order Route
+
 app.post("/create-order", async (req, res) => {
   try {
     const { name, email, phone, amount, tip, anonymous, address } = req.body;
@@ -92,7 +101,7 @@ app.post("/create-order", async (req, res) => {
   }
 });
 
-// ✅ Payment Verification Route
+
 app.post("/verify-payment", async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -118,7 +127,7 @@ app.post("/verify-payment", async (req, res) => {
   }
 });
 
-// ✅ Start Server
+
 app.listen(5000, () => console.log("🚀 Server running on http://localhost:5000"));
 app.get('/', (req, res) => {
     res.send('✅ API is Live');

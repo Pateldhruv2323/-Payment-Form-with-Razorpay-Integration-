@@ -1,4 +1,3 @@
-// components/FormFields.tsx
 import React, { useState } from 'react';
 import { FaUser, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
@@ -13,6 +12,7 @@ interface Props {
   onChange: (name: string, value: any) => void;
   submitted: boolean;
 }
+
 
 const countryOptions = [
     { code: '', flag: 'https://flagcdn.com/w40/in.png' },
@@ -35,12 +35,14 @@ const FormFields: React.FC<Props> = ({ formData, onChange, submitted,  }:any) =>
 
 
   return (
+    
     <div className="space-y-4 text-sm">
       {/* Name Field */}
       <div className="relative">
       {/* <label className="text-gray-500 font-medium block mb-1">
     Name <span className="text-red-500">*</span>
   </label> */}
+  
   <input
     type="text"
     placeholder="Name *"
@@ -80,6 +82,7 @@ const FormFields: React.FC<Props> = ({ formData, onChange, submitted,  }:any) =>
           type="email"
           placeholder="Email ID *"
           value={formData.email}
+          
           onChange={(e) => onChange('email', e.target.value)}
           className={`w-full border-b py-2 pr-8 outline-none ${
             submitted && isEmailInvalid ? 'border-red-500 placeholder:text-red-500' : 'border-gray-300'
@@ -168,7 +171,9 @@ const FormFields: React.FC<Props> = ({ formData, onChange, submitted,  }:any) =>
         />
         <FaMapMarkerAlt className="absolute right-2 top-2 text-gray-400" />
       </div>
+      
     </div>
+    
   );
 };
 
