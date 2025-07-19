@@ -12,7 +12,7 @@ const Form = ({ onLogout, userData, }: { onLogout: () => void; userData: { name:
   const [customAmount, setCustomAmount] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [aiMessage, setAiMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
 
   const [formData, setFormData] = useState({

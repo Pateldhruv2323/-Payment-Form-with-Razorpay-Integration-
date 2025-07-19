@@ -8,7 +8,7 @@ import Form from './pages/Form';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
+  const [, setIsVerified] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
